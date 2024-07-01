@@ -1,67 +1,72 @@
 class School {
-  directions = [];
+  directions: any[] = [];
 
-  addDirection(direction) {
+  addDirection(direction: any): void {
     this.directions.push(direction);
   }
 }
 
 class Direction {
-  levels = [];
+  levels: any[] = [];
+  _name: string;
 
-  get name() {
+  get name(): string {
     return this._name;
   }
 
-  constructor(name) {
+  constructor(name: string) {
     this._name = name;
   }
 
-  addLevel(level) {
+  addLevel(level: any): void {
     this.levels.push(level);
   }
 }
 
 class Level {
-  groups = [];
+  groups: any[] = [];
+  _program: any;
+  _name: string;
 
-  constructor(name, program) {
-    this.name = name;
+  constructor(name: string, program: any) {
+    this._name = name;
     this._program = program;
   }
 
-  get name() {
+  get name(): string {
     return this._name;
   }
 
-  get program() {
+  get program(): any {
     return this._program;
   }
 
-  addGroup(group) {
+  addGroup(group: any): void {
     this.groups.push(group);
   }
 }
 
 class Group {
-  _students = [];
+  _students: any[] = [];
+  directionName: string;
+  levelName: string;
 
-  get students() {
+  get students(): any[] {
     return this._students;
   }
 
-  constructor(directionName, levelName) {
+  constructor(directionName: string, levelName: string) {
     this.directionName = directionName;
     this.levelName = levelName;
   }
 
-  addStudent(student) {
+  addStudent(student: any): void {
     this._students.push(student);
   }
 
-  showPerformance() {
-    const sortedStudents = this.students.toSorted(
-      (a, b) => b.getPerformanceRating() - a.getPerformanceRating()
+  showPerformance(): any[] {
+    const sortedStudents: any[] = this.students.sort(
+      (a: any, b: any) => b.getPerformanceRating() - a.getPerformanceRating()
     );
 
     return sortedStudents;
@@ -69,45 +74,48 @@ class Group {
 }
 
 class Student {
-  grades = {};
-  attendance = [];
+  grades: any = {};
+  attendance: any[] = [];
+  firstName: string;
+  lastName: string;
+  birthYear: number;
 
-  constructor(firstName, lastName, birthYear) {
+  constructor(firstName: string, lastName: string, birthYear: number) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.birthYear = birthYear;
   }
 
-  get fullName() {
+  get fullName(): string {
     return `${this.lastName} ${this.firstName}`;
   }
 
-  set fullName(value) {
+  set fullName(value: string) {
     [this.lastName, this.firstName] = value.split(" ");
   }
 
-  get age() {
+  get age(): number {
     return new Date().getFullYear() - this.birthYear;
   }
 
-  setGrade(subject, grade) {
+  setGrade(subject: string, grade: string): void {
     this.grades[subject] = grade;
   }
 
-  markAttendance(present) {
+  markAttendance(present: any): void {
     this.attendance.push(present);
   }
 
-  getPerformanceRating() {
-    const gradeValues = Object.values(this.grades);
+  getPerformanceRating(): number {
+    const gradeValues: number[] = Object.values(this.grades);
 
     if (gradeValues.length === 0) return 0;
 
     const averageGrade =
-      gradeValues.reduce((sum, grade) => sum + grade, 0) / gradeValues.length;
+      gradeValues.reduce((sum: number, grade: number) => sum + grade, 0) / gradeValues.length;
 
-    const attendancePercentage =
-      (this.attendance.filter((present) => present).length /
+    const attendancePercentage: number =
+      (this.attendance.filter((present: any) => present).length /
         this.attendance.length) *
       100;
 
