@@ -158,8 +158,8 @@ type Student = {
   _firstName: string;
   _lastName: string;
   _birthYear: string;
-  _grades: string[];
-  _visits: number[];
+  _grades: { [workName: string]: number };
+  _visits: { [lesson: string]: boolean }[];
 };
 
 class Student {
@@ -168,8 +168,8 @@ class Student {
   _firstName: string;
   _lastName: string;
   _birthYear: number;
-  _grades: any[] = []; // workName: mark
-  _visits: any[] = []; // lesson: present
+  _grades: { [workName: string]: number } = {}; // workName: mark
+  _visits: { [lesson: string]: boolean }[] = []; // lesson: present
 
   constructor(firstName: string, lastName: string, birthYear: number) {
     this._firstName = firstName;
@@ -177,7 +177,7 @@ class Student {
     this._birthYear = birthYear;
   }
 
-  get fullName() {
+  get fullName(): string {
     return `${this._lastName} ${this._firstName}`;
   }
 
@@ -189,12 +189,12 @@ class Student {
     return new Date().getFullYear() - this._birthYear;
   }
 
-  set grades(value: any) {
-    this._grades = value;
+  set grades(grades: { [workName: string]: number }) {
+    this._grades = grades;
   }
 
-  set visits(value: any) {
-    this._visits = value;
+  set visits(visits: { [lesson: string]: boolean }[]) {
+    this._visits = visits;
   }
 
   getPerformanceRating() {
