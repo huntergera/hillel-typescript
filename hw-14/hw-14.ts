@@ -6,6 +6,10 @@ interface INote {
   updatedAt: Date;
   isCompleted: boolean;
   requiresConfirmation: boolean;
+
+  update(title: string, content: string): void;
+  toggleCompletion(): void;
+  validateContent(title: string, content: string): void;
 }
 
 class Note implements INote {
@@ -20,9 +24,6 @@ class Note implements INote {
   requiresConfirmation: boolean;
 
   constructor(title: string, content: string, requiresConfirmation: boolean = false) {
-    if (!title.trim() || !content.trim()) {
-      throw new Error('Title and content cannot be empty.');
-    }
     this.id = Note.idCounter++;
     this.title = title;
     this.content = content;
@@ -32,10 +33,14 @@ class Note implements INote {
     this.requiresConfirmation = requiresConfirmation;
   }
 
-  update(title: string, content: string) {
+  validateContent(title: string, content: string): void {
     if (!title.trim() || !content.trim()) {
       throw new Error('Title and content cannot be empty.');
     }
+  }
+
+  update(title: string, content: string) {
+    this.validateContent(title, content);
     if (this.requiresConfirmation && !confirm('Are you sure you want to update this note?')) {
       return;
     }
